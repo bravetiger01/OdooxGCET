@@ -13,6 +13,7 @@ export default function Navbar({ onMenuClick }) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [companyName, setCompanyName] = useState('');
   const profileRef = useRef(null);
   const notifRef = useRef(null);
 
@@ -31,6 +32,27 @@ export default function Navbar({ onMenuClick }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Fetch company name
+  useEffect(() => {
+    const fetchCompanyName = async () => {
+      if (user?.companyName) {
+        setCompanyName(user.companyName);
+      } else if (user?.companyId) {
+        try {
+          const { companyAPI } = await import('@/lib/api');
+          const result = await companyAPI.getCompanyDetails(user.companyId);
+          if (result.success && result.company) {
+            setCompanyName(result.company.company_name);
+          }
+        } catch (error) {
+          console.error('Failed to fetch company name:', error);
+        }
+      }
+    };
+
+    fetchCompanyName();
+  }, [user]);
+
   const handleLogout = () => {
     authAPI.logout();
     setUser(null);
@@ -41,7 +63,7 @@ export default function Navbar({ onMenuClick }) {
   return (
     <nav className="sticky top-0 z-30 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
       <div className="flex items-center justify-between px-4 py-3">
-        {/* Left: Menu button + Search */}
+        {/* Left: Menu button + Company Name + Search */}
         <div className="flex items-center gap-4 flex-1">
           <motion.button
             onClick={onMenuClick}
@@ -51,6 +73,16 @@ export default function Navbar({ onMenuClick }) {
           >
             <Menu className="w-6 h-6 text-gray-700" />
           </motion.button>
+
+          {/* Company Name */}
+          {companyName && (
+            <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl border border-cyan-100">
+              <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                {companyName.charAt(0)}
+              </div>
+              <span className="font-semibold text-gray-900">{companyName}</span>
+            </div>
+          )}
           
           <div className="hidden md:flex items-center flex-1 max-w-md">
             <motion.div 

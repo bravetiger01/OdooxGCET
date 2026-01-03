@@ -5,9 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import Card from '@/components/Card';
 import Tabs from '@/components/Tabs';
 import SalaryInfoTab from '@/components/SalaryInfoTab';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { employeeAPI } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
+import { ArrowLeft, User, Briefcase, CreditCard, DollarSign, Lock } from 'lucide-react';
 
 export default function EmployeeDetailPage() {
   const params = useParams();
@@ -99,7 +102,7 @@ export default function EmployeeDetailPage() {
           <p className="text-gray-600">You can only view your own profile.</p>
           <button
             onClick={() => router.push(`/employees/${user.empId}`)}
-            className="mt-4 px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+            className="mt-4 px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all"
           >
             Go to My Profile
           </button>
@@ -112,7 +115,7 @@ export default function EmployeeDetailPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading employee details...</p>
         </div>
       </div>
@@ -128,7 +131,7 @@ export default function EmployeeDetailPage() {
           <p className="text-gray-600 mb-4">The employee you're looking for doesn't exist.</p>
           <button
             onClick={() => router.push('/employees')}
-            className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+            className="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all"
           >
             Back to Employees
           </button>
@@ -220,7 +223,7 @@ export default function EmployeeDetailPage() {
             <BackIcon />
           </button>
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#F2BED1] to-[#FDCEDF] flex items-center justify-center text-white text-2xl font-semibold">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-2xl font-semibold">
               {employee.first_name?.charAt(0)}{employee.last_name?.charAt(0)}
             </div>
             <div>
@@ -229,7 +232,7 @@ export default function EmployeeDetailPage() {
               </h1>
               <p className="text-gray-600 mt-1">
                 {employee.id} • {roleLabels[employee.role] || employee.role}
-                {isSelf && <span className="ml-2 text-[#F2BED1]">(You)</span>}
+                {isSelf && <span className="ml-2 text-cyan-600">(You)</span>}
               </p>
             </div>
           </div>
@@ -280,7 +283,7 @@ export default function EmployeeDetailPage() {
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="Enter first name"
                   />
                 </div>
@@ -291,7 +294,7 @@ export default function EmployeeDetailPage() {
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="Enter last name"
                   />
                 </div>
@@ -302,7 +305,7 @@ export default function EmployeeDetailPage() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="email@company.com"
                   />
                 </div>
@@ -313,7 +316,7 @@ export default function EmployeeDetailPage() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="Enter phone number"
                   />
                 </div>
@@ -324,7 +327,7 @@ export default function EmployeeDetailPage() {
                     value={formData.date_of_birth}
                     onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div>
@@ -333,7 +336,7 @@ export default function EmployeeDetailPage() {
                     value={formData.gender}
                     onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                   >
                     <option value="">Select Gender</option>
                     <option value="male">Male</option>
@@ -347,7 +350,7 @@ export default function EmployeeDetailPage() {
                     value={formData.marital_status}
                     onChange={(e) => setFormData({ ...formData, marital_status: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                   >
                     <option value="">Select Status</option>
                     <option value="single">Single</option>
@@ -363,7 +366,7 @@ export default function EmployeeDetailPage() {
                     value={formData.personal_email}
                     onChange={(e) => setFormData({ ...formData, personal_email: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="personal@email.com"
                   />
                 </div>
@@ -374,7 +377,7 @@ export default function EmployeeDetailPage() {
                     value={formData.nationality}
                     onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="e.g., Indian"
                   />
                 </div>
@@ -385,7 +388,7 @@ export default function EmployeeDetailPage() {
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     disabled={!canEdit}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="Enter full address"
                   />
                 </div>
@@ -393,7 +396,7 @@ export default function EmployeeDetailPage() {
               {canEdit ? (
                 <button
                   onClick={handleSave}
-                  className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
                   Save Changes
                 </button>
@@ -434,7 +437,7 @@ export default function EmployeeDetailPage() {
                     value={formData.department}
                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="e.g., Engineering, HR"
                   />
                 </div>
@@ -445,7 +448,7 @@ export default function EmployeeDetailPage() {
                     value={formData.job_position}
                     onChange={(e) => setFormData({ ...formData, job_position: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="e.g., Software Engineer"
                   />
                 </div>
@@ -456,7 +459,7 @@ export default function EmployeeDetailPage() {
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     disabled={!canEdit}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-50 disabled:cursor-not-allowed"
                     placeholder="e.g., Mumbai Office"
                   />
                 </div>
@@ -491,7 +494,7 @@ export default function EmployeeDetailPage() {
               {canEdit ? (
                 <button
                   onClick={handleSave}
-                  className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
                   Save Changes
                 </button>
@@ -505,7 +508,7 @@ export default function EmployeeDetailPage() {
 
           {activeTab === 'financial' && (
             <div className="space-y-6">
-              <div className="bg-[#F8E8EE] p-6 rounded-lg">
+              <div className="bg-gradient-to-br from-cyan-50 via-blue-50 to-sky-50 border-2 border-cyan-100 p-6 rounded-lg">
                 <h3 className="text-lg font-semibold mb-4">Financial Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InfoItem label="Bank Name" value={employee.bank_name || 'Not set'} />

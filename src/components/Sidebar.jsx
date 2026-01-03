@@ -27,7 +27,7 @@ export default function Sidebar({ isOpen, onClose }) {
     { name: user?.role === 'Employee' ? 'My Attendance' : 'Attendance', path: '/attendance', icon: Clock, permission: 'view_attendance' },
     { name: user?.role === 'Employee' ? 'Time Off' : 'Leaves', path: '/leaves', icon: Calendar, permission: 'view_leaves' },
     { name: 'Approvals', path: '/approvals', icon: CheckCircle, permission: 'view_approvals' },
-    { name: 'Payroll', path: '/payroll/run', icon: DollarSign, permission: 'view_payroll' },
+    { name: user?.role === 'Employee' ? 'My Payslips' : 'Payroll', path: user?.role === 'Employee' ? '/my-payslips' : '/payroll/run', icon: DollarSign, permission: user?.role === 'Employee' ? 'view_own_payslip' : 'view_payroll' },
     { name: 'Reports', path: '/reports', icon: FileText, permission: 'view_reports' },
     { name: 'Settings', path: '/settings', icon: Settings, permission: 'view_settings' },
   ];

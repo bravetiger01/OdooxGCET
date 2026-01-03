@@ -11,6 +11,7 @@ interface User {
   empId?: string;
   companyId?: number;
   avatar: string | null;
+  companyName?: string;
 }
 
 interface Toast {

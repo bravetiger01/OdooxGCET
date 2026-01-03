@@ -17,6 +17,7 @@ export default function DashboardPage() {
   const [attendanceStatus, setAttendanceStatus] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
   const [mounted, setMounted] = useState(false);
+  const [companyName, setCompanyName] = useState('');
   
   // Dashboard data states
   const [stats, setStats] = useState({
@@ -46,7 +47,24 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!mounted || !user?.companyId) return;
     fetchDashboardData();
+    fetchCompanyName();
   }, [user, mounted]);
+
+  const fetchCompanyName = async () => {
+    if (user?.companyName) {
+      setCompanyName(user.companyName);
+    } else if (user?.companyId) {
+      try {
+        const { companyAPI } = await import('@/lib/api');
+        const result = await companyAPI.getCompanyDetails(user.companyId);
+        if (result.success && result.company) {
+          setCompanyName(result.company.company_name);
+        }
+      } catch (error) {
+        console.error('Failed to fetch company name:', error);
+      }
+    }
+  };
 
   const fetchDashboardData = async () => {
     if (!user?.companyId) return;
@@ -162,6 +180,11 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600">Welcome back, {user?.name}!</p>
+          {companyName && (
+            <p className="text-sm text-cyan-600 font-medium mt-1">
+              {companyName}
+            </p>
+          )}
         </div>
         {mounted && currentTime && (
           <div className="text-sm text-gray-500">

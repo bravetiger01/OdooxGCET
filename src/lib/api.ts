@@ -1,5 +1,6 @@
 // API Configuration and Service
-const API_BASE_URL = 'http://localhost:5000';
+// Using Next.js API routes instead of Express backend
+const API_BASE_URL = '/api';
 
 interface LoginRequest {
   email: string;
@@ -7,7 +8,7 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
-  ok: boolean;
+  success: boolean;
   user?: {
     id: string;
     company_id: number;
@@ -31,7 +32,7 @@ const roleMap: Record<string, 'Admin' | 'HR' | 'Payroll' | 'Employee'> = {
 export const authAPI = {
   async login(email: string, password: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/login`, {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export const authAPI = {
         throw new Error(data.error || 'Login failed');
       }
 
-      if (data.ok && data.user) {
+      if (data.success && data.user) {
         // Map backend role to frontend role
         const frontendRole = roleMap[data.user.role] || 'Employee';
         
@@ -100,7 +101,7 @@ export const authAPI = {
 
   async signup(data: any) {
     try {
-      const response = await fetch(`${API_BASE_URL}/signup`, {
+      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -422,7 +423,7 @@ export const attendanceAPI = {
 export const leaveAPI = {
   async getLeaveTypes(company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/leave-types?company_id=${company_id}`, {
+      const response = await fetch(`${API_BASE_URL}/leave/types?company_id=${company_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -450,7 +451,7 @@ export const leaveAPI = {
 
   async getLeaveAllocations(user_id: string, year?: number) {
     try {
-      let url = `${API_BASE_URL}/leave-allocations?user_id=${user_id}`;
+      let url = `${API_BASE_URL}/leave/allocations?user_id=${user_id}`;
       if (year) url += `&year=${year}`;
 
       const response = await fetch(url, {
@@ -481,7 +482,7 @@ export const leaveAPI = {
 
   async getLeaveRequests(company_id: number, user_id?: string, status?: string) {
     try {
-      let url = `${API_BASE_URL}/leave-requests?company_id=${company_id}`;
+      let url = `${API_BASE_URL}/leave/requests?company_id=${company_id}`;
       if (user_id) url += `&user_id=${user_id}`;
       if (status) url += `&status=${status}`;
 
@@ -513,7 +514,7 @@ export const leaveAPI = {
 
   async applyLeave(leaveData: any) {
     try {
-      const response = await fetch(`${API_BASE_URL}/leave-requests`, {
+      const response = await fetch(`${API_BASE_URL}/leave/requests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -541,7 +542,7 @@ export const leaveAPI = {
 
   async updateLeaveStatus(id: number, status: string, approved_by: string, company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/leave-requests/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/leave/requests/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -569,7 +570,7 @@ export const leaveAPI = {
 
   async cancelLeaveRequest(id: number, user_id: string, company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/leave-requests/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/leave/requests/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -599,7 +600,7 @@ export const leaveAPI = {
 export const salaryAPI = {
   async getSalaryStructure(user_id: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/salary-structure?user_id=${user_id}`, {
+      const response = await fetch(`${API_BASE_URL}/salary/structure?user_id=${user_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -627,7 +628,7 @@ export const salaryAPI = {
 
   async getAllSalaryStructures(company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/salary-structures?company_id=${company_id}`, {
+      const response = await fetch(`${API_BASE_URL}/salary/structures?company_id=${company_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -655,7 +656,7 @@ export const salaryAPI = {
 
   async upsertSalaryStructure(salaryData: any) {
     try {
-      const response = await fetch(`${API_BASE_URL}/salary-structure`, {
+      const response = await fetch(`${API_BASE_URL}/salary/structure`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -684,7 +685,7 @@ export const salaryAPI = {
 
   async getPayrollSettings(company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payroll-settings?company_id=${company_id}`, {
+      const response = await fetch(`${API_BASE_URL}/salary/settings?company_id=${company_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -712,7 +713,7 @@ export const salaryAPI = {
 
   async updatePayrollSettings(company_id: number, settings: any, admin_user_id: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payroll-settings`, {
+      const response = await fetch(`${API_BASE_URL}/salary/settings`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -742,7 +743,7 @@ export const salaryAPI = {
 export const payrollAPI = {
   async createPayrun(payrunData: any) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payrun`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/payruns`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -771,7 +772,7 @@ export const payrollAPI = {
 
   async computePayroll(payrun_id: number, admin_user_id: string, company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payrun/compute`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/compute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -800,7 +801,7 @@ export const payrollAPI = {
 
   async validatePayrun(payrun_id: number, admin_user_id: string, company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payrun/validate`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/validate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -828,7 +829,7 @@ export const payrollAPI = {
 
   async getPayruns(company_id: number, status?: string) {
     try {
-      let url = `${API_BASE_URL}/payruns?company_id=${company_id}`;
+      let url = `${API_BASE_URL}/payroll/payruns?company_id=${company_id}`;
       if (status) url += `&status=${status}`;
 
       const response = await fetch(url, {
@@ -859,7 +860,7 @@ export const payrollAPI = {
 
   async getPayslipsByPayrun(payrun_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payslips?payrun_id=${payrun_id}`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/payslips?payrun_id=${payrun_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -868,7 +869,7 @@ export const payrollAPI = {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || (!data.ok && !data.success)) {
         throw new Error(data.error || 'Failed to fetch payslips');
       }
 
@@ -877,6 +878,7 @@ export const payrollAPI = {
         payslips: data.payslips || [],
       };
     } catch (error) {
+      console.error('Error in getPayslipsByPayrun:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'An error occurred',
@@ -887,7 +889,7 @@ export const payrollAPI = {
 
   async getPayslipDetails(payslip_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/payslip?payslip_id=${payslip_id}`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/payslips/details?payslip_id=${payslip_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -896,7 +898,7 @@ export const payrollAPI = {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !data.ok) {
         throw new Error(data.error || 'Failed to fetch payslip details');
       }
 
@@ -906,16 +908,19 @@ export const payrollAPI = {
         details: data.details || [],
       };
     } catch (error) {
+      console.error('Error in getPayslipDetails:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'An error occurred',
+        payslip: null,
+        details: [],
       };
     }
   },
 
   async getUserPayslips(user_id: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/user-payslips?user_id=${user_id}`, {
+      const response = await fetch(`${API_BASE_URL}/payroll/user-payslips?user_id=${user_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -924,7 +929,7 @@ export const payrollAPI = {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || (!data.ok && !data.success)) {
         throw new Error(data.error || 'Failed to fetch payslips');
       }
 
@@ -933,6 +938,7 @@ export const payrollAPI = {
         payslips: data.payslips || [],
       };
     } catch (error) {
+      console.error('Error in getUserPayslips:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'An error occurred',
@@ -1051,7 +1057,7 @@ export const reportsAPI = {
 
   async getDashboardStats(company_id: number) {
     try {
-      const response = await fetch(`${API_BASE_URL}/reports/dashboard-stats?company_id=${company_id}`, {
+      const response = await fetch(`${API_BASE_URL}/reports/dashboard?company_id=${company_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -1073,6 +1079,37 @@ export const reportsAPI = {
         success: false,
         error: error instanceof Error ? error.message : 'An error occurred',
         stats: {},
+      };
+    }
+  },
+};
+
+// Company API
+export const companyAPI = {
+  async getCompanyDetails(company_id: number) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/company?company_id=${company_id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch company details');
+      }
+
+      return {
+        success: true,
+        company: data.company || null,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'An error occurred',
+        company: null,
       };
     }
   },
