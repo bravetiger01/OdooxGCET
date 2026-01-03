@@ -88,7 +88,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F9F5F6] via-[#F8E8EE] to-[#FDCEDF] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F9F5F6] via-cyan-50 to-cyan-700 p-4">
       <div className="w-full max-w-2xl">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
@@ -115,7 +115,7 @@ export default function SignupPage() {
                   type="text"
                   value={formData.company_name}
                   onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="e.g., Odoo India"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -137,7 +137,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                     placeholder="John"
                   />
                 </div>
@@ -150,7 +150,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                     placeholder="Doe"
                   />
                 </div>
@@ -164,7 +164,7 @@ export default function SignupPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="admin@company.com"
                 />
               </div>
@@ -177,7 +177,7 @@ export default function SignupPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="1234567890"
                   maxLength="10"
                 />
@@ -192,7 +192,7 @@ export default function SignupPage() {
                     type="password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                     placeholder="Min. 6 characters"
                   />
                 </div>
@@ -205,7 +205,7 @@ export default function SignupPage() {
                     type="password"
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                     placeholder="Re-enter password"
                   />
                 </div>
@@ -215,13 +215,13 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 mt-6"
+              className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 mt-6"
             >
               {loading ? 'Creating Company...' : 'Create Company & Admin Account'}
             </button>
 
             <div className="text-center text-sm text-gray-600">
-              Already have an account? <a href="/login" className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium">Sign In</a>
+              Already have an account? <a href="/login" className="text-cyan-600 hover:text-cyan-700 font-medium">Sign In</a>
             </div>
           </form>
         </div>

@@ -89,9 +89,9 @@ export default function DataTable({ columns, data, onRowClick }) {
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 border rounded ${
+                className={`px-3 py-1 border rounded transition-colors ${
                   currentPage === i + 1
-                    ? 'bg-[#F2BED1] text-white border-[#F2BED1]'
+                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-cyan-600 shadow-md'
                     : 'border-gray-300 hover:bg-gray-50'
                 }`}
               >

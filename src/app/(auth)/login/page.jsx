@@ -50,7 +50,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F9F5F6] via-[#F8E8EE] to-[#FDCEDF] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F9F5F6] via-cyan-50 to-cyan-700 p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
@@ -73,7 +73,7 @@ export default function LoginPage() {
                 type="text"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="Enter your email or employee ID"
               />
             </div>
@@ -86,17 +86,17 @@ export default function LoginPage() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="Enter your password"
               />
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-[#F2BED1] focus:ring-[#F2BED1]" />
+                <input type="checkbox" className="rounded border-gray-300 text-cyan-600 focus:ring-cyan-600" />
                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-[#F2BED1] hover:text-[#FDCEDF]">
+              <a href="#" className="text-sm text-cyan-600 hover:text-cyan-700">
                 Forgot password?
               </a>
             </div>
@@ -104,18 +104,18 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
+              className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-600">
-            Don't have an account? <a href="/signup" className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium">Sign Up</a>
+            Don't have an account? <a href="/signup" className="text-cyan-600 hover:text-cyan-700 font-medium">Sign Up</a>
           </div>
 
           {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-[#F8E8EE] rounded-lg">
+          <div className="mt-6 p-4 bg-cyan-50 rounded-lg">
             <h3 className="text-sm font-semibold text-gray-900 mb-2">Demo Credentials:</h3>
             <div className="space-y-2 text-xs text-gray-700">
               <div><strong>Admin:</strong> admin@demo.com / admin123</div>

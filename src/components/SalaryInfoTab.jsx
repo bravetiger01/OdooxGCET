@@ -160,7 +160,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F2BED1]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
       </div>
     );
   }
@@ -195,7 +195,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg"
             >
               {structure ? 'Edit' : 'Create'} Salary Structure
             </button>
@@ -243,7 +243,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
               disabled={!editing}
               value={formData.monthly_wage}
               onChange={(e) => handleMonthlyWageChange(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-100"
               placeholder="50000"
             />
           </div>
@@ -257,7 +257,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
               disabled={!editing}
               value={formData.yearly_wage}
               onChange={(e) => handleYearlyWageChange(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-100"
               placeholder="600000"
             />
           </div>
@@ -271,7 +271,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
               disabled={!editing}
               value={formData.working_days_per_week}
               onChange={(e) => setFormData({ ...formData, working_days_per_week: parseInt(e.target.value) || 5 })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-100"
               min="1"
               max="7"
             />
@@ -287,7 +287,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
               disabled={!editing}
               value={formData.break_time_hours}
               onChange={(e) => setFormData({ ...formData, break_time_hours: parseFloat(e.target.value) || 1 })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-100"
             />
           </div>
 
@@ -300,7 +300,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
               disabled={!editing}
               value={formData.effective_from}
               onChange={(e) => setFormData({ ...formData, effective_from: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1] disabled:bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600 disabled:bg-gray-100"
             />
           </div>
         </div>

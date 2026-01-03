@@ -176,12 +176,12 @@ export default function EmployeesPage() {
             placeholder="Search by name, ID, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
           />
           <select
             value={filterDept}
             onChange={(e) => setFilterDept(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
           >
             <option value="">All Departments</option>
             {departments.map(dept => (
@@ -190,7 +190,7 @@ export default function EmployeesPage() {
           </select>
           <button
             onClick={handleExport}
-            className="bg-[#F8E8EE] hover:bg-[#FDCEDF] text-gray-900 font-medium px-6 py-2 rounded-lg transition-colors"
+            className="bg-cyan-50 hover:bg-cyan-700 text-gray-900 font-medium px-6 py-2 rounded-lg transition-colors"
           >
             Export CSV
           </button>
@@ -313,7 +313,7 @@ export default function EmployeesPage() {
                 required
                 value={formData.first_name}
                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
             <div>
@@ -323,7 +323,7 @@ export default function EmployeesPage() {
                 required
                 value={formData.last_name}
                 onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
             <div>
@@ -333,7 +333,7 @@ export default function EmployeesPage() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
             <div>
@@ -343,7 +343,7 @@ export default function EmployeesPage() {
                 required
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="Min. 6 characters"
               />
             </div>
@@ -353,7 +353,7 @@ export default function EmployeesPage() {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
             <div>
@@ -362,7 +362,7 @@ export default function EmployeesPage() {
                 type="text"
                 value={formData.department}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="e.g., Engineering, HR, Sales"
               />
             </div>
@@ -372,7 +372,7 @@ export default function EmployeesPage() {
                 type="text"
                 value={formData.job_position}
                 onChange={(e) => setFormData({ ...formData, job_position: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="e.g., Software Engineer, Manager"
               />
             </div>
@@ -382,7 +382,7 @@ export default function EmployeesPage() {
                 required
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               >
                 <option value="employee">Employee</option>
                 <option value="hr_officer">HR Officer</option>
@@ -396,7 +396,7 @@ export default function EmployeesPage() {
                 type="date"
                 value={formData.date_of_joining}
                 onChange={(e) => setFormData({ ...formData, date_of_joining: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
           </div>
@@ -412,7 +412,7 @@ export default function EmployeesPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg disabled:opacity-50"
+              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg disabled:opacity-50"
             >
               {submitting ? 'Adding...' : 'Add Employee'}
             </button>

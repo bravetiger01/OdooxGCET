@@ -115,7 +115,7 @@ export default function SettingsPage() {
       key: 'actions',
       label: 'Actions',
       render: () => (
-        <button className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium">
+        <button className="text-cyan-600 hover:text-cyan-700 font-medium">
           Edit
         </button>
       ),
@@ -130,7 +130,7 @@ export default function SettingsPage() {
       key: 'actions',
       label: 'Actions',
       render: () => (
-        <button className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium">
+        <button className="text-cyan-600 hover:text-cyan-700 font-medium">
           Edit
         </button>
       ),
@@ -164,7 +164,7 @@ export default function SettingsPage() {
       key: 'actions',
       label: 'Actions',
       render: () => (
-        <button className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium">
+        <button className="text-cyan-600 hover:text-cyan-700 font-medium">
           Edit
         </button>
       ),
@@ -195,7 +195,7 @@ export default function SettingsPage() {
                 <input
                   type="text"
                   defaultValue="DayFlow India"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div>
@@ -212,7 +212,7 @@ export default function SettingsPage() {
                 <input
                   type="email"
                   defaultValue="admin@DayFlow.in"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div>
@@ -220,7 +220,7 @@ export default function SettingsPage() {
                 <input
                   type="tel"
                   defaultValue="+91 98765 43210"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div>
@@ -228,12 +228,12 @@ export default function SettingsPage() {
                 <textarea
                   rows={3}
                   defaultValue="Mumbai, Maharashtra, India"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <button
                 onClick={() => showToast('Company settings saved!', 'success')}
-                className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-6 py-2 rounded-lg"
               >
                 Save Changes
               </button>
@@ -265,7 +265,7 @@ export default function SettingsPage() {
                     ...payrollSettings,
                     payroll_pf_rate_employee: parseFloat(e.target.value) || 0
                   })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="12"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                     ...payrollSettings,
                     payroll_pf_rate_employer: parseFloat(e.target.value) || 0
                   })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="12"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -310,7 +310,7 @@ export default function SettingsPage() {
                     ...payrollSettings,
                     payroll_professional_tax: parseFloat(e.target.value) || 0
                   })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="200"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -334,7 +334,7 @@ export default function SettingsPage() {
                     ...payrollSettings,
                     payroll_working_days_per_week: parseInt(e.target.value) || 5
                   })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   placeholder="5"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -351,7 +351,7 @@ export default function SettingsPage() {
                       ...payrollSettings,
                       payroll_consider_half_days: e.target.checked
                     })}
-                    className="w-5 h-5 text-[#F2BED1] border-gray-300 rounded focus:ring-[#F2BED1]"
+                    className="w-5 h-5 text-cyan-600 border-gray-300 rounded focus:ring-cyan-600"
                   />
                   <div>
                     <div className="text-sm font-medium text-gray-700">Consider Half Days</div>
@@ -369,7 +369,7 @@ export default function SettingsPage() {
                       ...payrollSettings,
                       payroll_deduct_absent_days: e.target.checked
                     })}
-                    className="w-5 h-5 text-[#F2BED1] border-gray-300 rounded focus:ring-[#F2BED1]"
+                    className="w-5 h-5 text-cyan-600 border-gray-300 rounded focus:ring-cyan-600"
                   />
                   <div>
                     <div className="text-sm font-medium text-gray-700">Deduct for Absent Days</div>
@@ -443,7 +443,7 @@ export default function SettingsPage() {
               <button
                 onClick={handleSavePayrollSettings}
                 disabled={loading}
-                className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg disabled:opacity-50"
+                className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-6 py-2 rounded-lg disabled:opacity-50"
               >
                 {loading ? 'Saving...' : 'Save Payroll Settings'}
               </button>
@@ -455,7 +455,7 @@ export default function SettingsPage() {
               <div className="flex justify-end">
                 <button
                   onClick={() => handleAddNew('leave-type')}
-                  className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-6 py-2 rounded-lg"
                 >
                   + Add Leave Type
                 </button>
@@ -469,7 +469,7 @@ export default function SettingsPage() {
               <div className="flex justify-end">
                 <button
                   onClick={() => handleAddNew('shift')}
-                  className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-6 py-2 rounded-lg"
                 >
                   + Add Shift
                 </button>
@@ -483,7 +483,7 @@ export default function SettingsPage() {
               <div className="flex justify-end">
                 <button
                   onClick={() => handleAddNew('salary-component')}
-                  className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-2 rounded-lg"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-6 py-2 rounded-lg"
                 >
                   + Add Component
                 </button>
@@ -503,7 +503,7 @@ export default function SettingsPage() {
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div>
@@ -511,7 +511,7 @@ export default function SettingsPage() {
                 <input
                   type="number"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div className="flex items-center gap-4">
@@ -534,7 +534,7 @@ export default function SettingsPage() {
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -543,7 +543,7 @@ export default function SettingsPage() {
                   <input
                     type="time"
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   />
                 </div>
                 <div>
@@ -551,7 +551,7 @@ export default function SettingsPage() {
                   <input
                     type="time"
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                   />
                 </div>
               </div>
@@ -565,14 +565,14 @@ export default function SettingsPage() {
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
                 <select
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 >
                   <option value="">Select Type</option>
                   <option value="Earning">Earning</option>
@@ -583,7 +583,7 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Percentage</label>
                 <input
                   type="number"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
               </div>
             </>
@@ -599,7 +599,7 @@ export default function SettingsPage() {
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg"
             >
               Save
             </button>

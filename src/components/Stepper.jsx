@@ -7,7 +7,7 @@ export default function Stepper({ steps, currentStep }) {
             <div className={`
               w-10 h-10 rounded-full flex items-center justify-center font-semibold
               ${index < currentStep ? 'bg-green-500 text-white' : 
-                index === currentStep ? 'bg-[#F2BED1] text-white' : 
+                index === currentStep ? 'bg-cyan-600 text-white' : 
                 'bg-gray-200 text-gray-500'}
             `}>
               {index < currentStep ? <CheckIcon /> : index + 1}

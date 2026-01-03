@@ -238,7 +238,7 @@ export default function LeavesPage() {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
           >
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -258,7 +258,7 @@ export default function LeavesPage() {
             {leaveRequests.map((request) => (
               <div
                 key={request.id}
-                className="border border-gray-200 rounded-lg p-4 hover:border-[#F2BED1] transition-colors"
+                className="border border-gray-200 rounded-lg p-4 hover:border-cyan-600 transition-colors"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -357,7 +357,7 @@ export default function LeavesPage() {
                 console.log('🔍 Selected leave type:', e.target.value);
                 setFormData({ ...formData, leave_type_id: e.target.value });
               }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
             >
               <option value="">Select Leave Type</option>
               {console.log('🔍 Rendering leave types in dropdown:', leaveTypes)}
@@ -376,7 +376,7 @@ export default function LeavesPage() {
                 required
                 value={formData.start_date}
                 onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
             <div>
@@ -386,7 +386,7 @@ export default function LeavesPage() {
                 required
                 value={formData.end_date}
                 onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               />
             </div>
           </div>
@@ -402,7 +402,7 @@ export default function LeavesPage() {
               value={formData.reason}
               onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
               placeholder="Please provide a reason for your leave..."
             />
           </div>
@@ -416,7 +416,7 @@ export default function LeavesPage() {
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg"
             >
               Submit Request
             </button>

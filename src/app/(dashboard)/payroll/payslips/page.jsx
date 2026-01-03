@@ -124,7 +124,7 @@ export default function PayslipsPage() {
             e.stopPropagation();
             fetchPayslipDetails(row.id);
           }}
-          className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium"
+          className="text-cyan-600 hover:text-cyan-700 font-medium"
         >
           View
         </button>
@@ -142,7 +142,7 @@ export default function PayslipsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading payslips...</p>
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function PayslipsPage() {
             <select
               value={selectedPayrun || ''}
               onChange={(e) => setSelectedPayrun(parseInt(e.target.value))}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
             >
               {payruns.map((payrun) => (
                 <option key={payrun.id} value={payrun.id}>
@@ -190,7 +190,7 @@ export default function PayslipsPage() {
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F2BED1]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
           </div>
         ) : (
           <DataTable
@@ -209,7 +209,7 @@ export default function PayslipsPage() {
       >
         {selectedPayslip && (
           <div className="space-y-6">
-            <div className="bg-[#F8E8EE] p-6 rounded-lg print:bg-white">
+            <div className="bg-cyan-50 p-6 rounded-lg print:bg-white">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold">DayFlow HRMS</h2>
                 <p className="text-sm text-gray-600">
@@ -358,7 +358,7 @@ export default function PayslipsPage() {
               </button>
               <button
                 onClick={handlePrint}
-                className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+                className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg"
               >
                 Print / Download PDF
               </button>
