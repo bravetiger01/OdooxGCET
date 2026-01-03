@@ -1,15 +1,35 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import { authAPI } from '@/lib/api';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Bell, Menu, User, LogOut, ChevronDown } from 'lucide-react';
 
 export default function Navbar({ onMenuClick }) {
   const router = useRouter();
   const { user, setUser, showToast } = useApp();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const profileRef = useRef(null);
+  const notifRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
     authAPI.logout();
@@ -19,77 +39,136 @@ export default function Navbar({ onMenuClick }) {
   };
 
   return (
-    <nav className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-200">
+    <nav className="sticky top-0 z-30 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
       <div className="flex items-center justify-between px-4 py-3">
         {/* Left: Menu button + Search */}
         <div className="flex items-center gap-4 flex-1">
-          <button
+          <motion.button
             onClick={onMenuClick}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <MenuIcon />
-          </button>
+            <Menu className="w-6 h-6 text-gray-700" />
+          </motion.button>
           
           <div className="hidden md:flex items-center flex-1 max-w-md">
-            <div className="relative w-full">
+            <motion.div 
+              className="relative w-full"
+              animate={{ scale: searchFocused ? 1.02 : 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search employees, leaves, payroll..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
               />
-              <SearchIcon />
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Right: Notifications + Profile */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-2 rounded-lg hover:bg-gray-100"
-          >
-            <BellIcon />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
+        <div className="flex items-center gap-3">
+          {/* Notifications */}
+          <div className="relative" ref={notifRef}>
+            <motion.button
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-2.5 rounded-xl hover:bg-gray-100 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Bell className="w-5 h-5 text-gray-700" />
+              <motion.span
+                className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.button>
 
-          <div className="relative">
-            <button
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50"
+                >
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <h3 className="font-semibold text-gray-900">Notifications</h3>
+                  </div>
+                  <div className="max-h-96 overflow-y-auto">
+                    <div className="px-4 py-8 text-center text-gray-500">
+                      <Bell className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                      <p>No new notifications</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Profile Menu */}
+          <div className="relative" ref={profileRef}>
+            <motion.button
               onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-lg transition-colors"
+              className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-xl transition-colors py-1 pr-2"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <div className="hidden sm:block text-right">
-                <div className="text-sm font-medium text-gray-900">{user?.name}</div>
+                <div className="text-sm font-semibold text-gray-900">{user?.name}</div>
                 <div className="text-xs text-gray-500">{user?.role}</div>
               </div>
-              <div className="w-10 h-10 rounded-full bg-[#F2BED1] flex items-center justify-center text-white font-semibold">
-                {user?.name.charAt(0)}
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-semibold shadow-lg">
+                {user?.name?.charAt(0)}
               </div>
-            </button>
+              <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showProfileMenu ? 'rotate-180' : ''}`} />
+            </motion.button>
 
-            {/* Profile Dropdown */}
-            {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                <div className="px-4 py-2 border-b border-gray-200">
-                  <div className="text-sm font-medium text-gray-900">{user?.name}</div>
-                  <div className="text-xs text-gray-500">{user?.empId}</div>
-                </div>
-                <button
-                  onClick={() => {
-                    setShowProfileMenu(false);
-                    router.push(`/employees/${user?.empId}`);
-                  }}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            <AnimatePresence>
+              {showProfileMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden"
                 >
-                  My Profile
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+                  <div className="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-cyan-50 to-blue-50">
+                    <div className="text-sm font-semibold text-gray-900">{user?.name}</div>
+                    <div className="text-xs text-gray-500">{user?.empId}</div>
+                    <div className="text-xs text-cyan-600 mt-1">{user?.email}</div>
+                  </div>
+                  
+                  <motion.button
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      router.push(`/employees/${user?.empId}`);
+                    }}
+                    className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                    whileHover={{ x: 4 }}
+                  >
+                    <User className="w-4 h-4" />
+                    My Profile
+                  </motion.button>
+                  
+                  <div className="border-t border-gray-100 my-1" />
+                  
+                  <motion.button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
+                    whileHover={{ x: 4 }}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

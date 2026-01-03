@@ -3,7 +3,7 @@ import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 
 export const metadata: Metadata = {
-  title: "WorkZen",
+  title: "DayFlow",
   description: "Human Resource Management System",
 };
 

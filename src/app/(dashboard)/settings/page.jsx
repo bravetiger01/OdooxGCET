@@ -194,7 +194,7 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
                 <input
                   type="text"
-                  defaultValue="WorkZen India"
+                  defaultValue="DayFlow India"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
                 />
               </div>
@@ -211,7 +211,7 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 <input
                   type="email"
-                  defaultValue="admin@workzen.in"
+                  defaultValue="admin@DayFlow.in"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F2BED1]"
                 />
               </div>

@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import Tabs from '@/components/Tabs';
 import DataTable from '@/components/DataTable';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { BarChart } from '@/components/SimpleChart';
 import { reportsAPI } from '@/lib/api';
 import { exportToCSV, formatCurrency } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function ReportsPage() {
   const { showToast, user } = useApp();
@@ -203,26 +205,23 @@ export default function ReportsPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading reports...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading reports..." />;
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <motion.div
+        className="flex justify-end"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
         <button
           onClick={handleExport}
-          className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-3 rounded-lg transition-colors"
+          className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
         >
-          Export CSV
+          📊 Export CSV
         </button>
-      </div>
+      </motion.div>
 
       <Card className="p-6">
         <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
@@ -291,19 +290,19 @@ export default function ReportsPage() {
                 </div>
               )}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-6 bg-[#F8E8EE]">
+                <Card className="p-6 bg-gradient-to-br from-cyan-50 to-blue-50">
                   <div className="text-sm text-gray-600 mb-1">Total Gross</div>
                   <div className="text-2xl font-bold text-gray-900">
                     {formatCurrency(payrollTotals.total_gross)}
                   </div>
                 </Card>
-                <Card className="p-6 bg-[#F8E8EE]">
+                <Card className="p-6 bg-gradient-to-br from-red-50 to-orange-50">
                   <div className="text-sm text-gray-600 mb-1">Total Deductions</div>
                   <div className="text-2xl font-bold text-red-600">
                     {formatCurrency(payrollTotals.total_deductions)}
                   </div>
                 </Card>
-                <Card className="p-6 bg-[#F8E8EE]">
+                <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50">
                   <div className="text-sm text-gray-600 mb-1">Total Net Pay</div>
                   <div className="text-2xl font-bold text-green-600">
                     {formatCurrency(payrollTotals.total_net)}

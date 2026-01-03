@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import DataTable from '@/components/DataTable';
 import Modal from '@/components/Modal';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import EmptyState from '@/components/EmptyState';
 import { attendanceAPI } from '@/lib/api';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function AttendancePage() {
   const { showToast, hasPermission, user } = useApp();
@@ -160,7 +163,7 @@ export default function AttendancePage() {
         <div className="flex gap-2">
           <button
             onClick={() => handleEdit(row)}
-            className="text-[#F2BED1] hover:text-[#FDCEDF] font-medium text-sm"
+            className="text-cyan-600 hover:text-cyan-700 font-medium text-sm"
           >
             Edit
           </button>
@@ -176,20 +179,17 @@ export default function AttendancePage() {
   ];
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading attendance...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading attendance..." />;
   }
 
   return (
     <div className="space-y-6">
       {canEdit && (
-        <div className="flex justify-end">
+        <motion.div
+          className="flex justify-end"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
           <button
             onClick={() => {
               setSelectedRecord(null);
@@ -202,11 +202,11 @@ export default function AttendancePage() {
               });
               setShowEditModal(true);
             }}
-            className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
             + Add Attendance
           </button>
-        </div>
+        </motion.div>
       )}
 
       <Card className="p-6">
@@ -232,7 +232,7 @@ export default function AttendancePage() {
           <div className="flex items-end">
             <button
               onClick={fetchAttendance}
-              className="bg-[#F8E8EE] hover:bg-[#FDCEDF] text-gray-900 font-medium px-6 py-2 rounded-lg transition-colors"
+              className="bg-gradient-to-r from-cyan-100 to-blue-100 hover:from-cyan-200 hover:to-blue-200 text-gray-900 font-medium px-6 py-2 rounded-lg transition-colors"
             >
               Filter
             </button>
@@ -240,11 +240,11 @@ export default function AttendancePage() {
         </div>
 
         {attendance.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">📅</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Attendance Records</h3>
-            <p className="text-gray-500">No attendance records found for the selected period.</p>
-          </div>
+          <EmptyState
+            icon="📅"
+            title="No Attendance Records"
+            description="No attendance records found for the selected period."
+          />
         ) : (
           <DataTable columns={columns} data={attendance} />
         )}
@@ -317,7 +317,7 @@ export default function AttendancePage() {
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg"
+              className="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg"
             >
               {selectedRecord ? 'Update' : 'Add'} Attendance
             </button>

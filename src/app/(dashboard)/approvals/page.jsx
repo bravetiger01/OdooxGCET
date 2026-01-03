@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import EmptyState from '@/components/EmptyState';
 import { leaveAPI } from '@/lib/api';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function ApprovalsPage() {
   const { showToast, user } = useApp();
@@ -72,14 +75,7 @@ export default function ApprovalsPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading approvals...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading approvals..." />;
   }
 
   return (
@@ -93,11 +89,11 @@ export default function ApprovalsPage() {
         </div>
 
         {pendingLeaves.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">✅</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">All Caught Up!</h3>
-            <p className="text-gray-500">No pending approvals at the moment.</p>
-          </div>
+          <EmptyState
+            icon="✅"
+            title="All Caught Up!"
+            description="No pending approvals at the moment."
+          />
         ) : (
           <div className="space-y-4">
             {pendingLeaves.map((request) => (
@@ -107,12 +103,12 @@ export default function ApprovalsPage() {
                   setSelectedRequest(request);
                   setShowDetailModal(true);
                 }}
-                className="border border-gray-200 rounded-lg p-4 hover:border-[#F2BED1] hover:shadow-md transition-all cursor-pointer"
+                className="border border-gray-200 rounded-xl p-4 hover:border-cyan-300 hover:shadow-lg transition-all cursor-pointer"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#F2BED1] to-[#FDCEDF] flex items-center justify-center text-white font-semibold">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-semibold">
                         {request.first_name?.charAt(0)}{request.last_name?.charAt(0)}
                       </div>
                       <div>
@@ -141,7 +137,7 @@ export default function ApprovalsPage() {
                       </div>
                       <div>
                         <span className="text-gray-500">Days:</span>
-                        <p className="font-medium text-[#F2BED1]">{request.total_days} days</p>
+                        <p className="font-medium text-cyan-600">{request.total_days} days</p>
                       </div>
                     </div>
                     {request.reason && (
@@ -160,7 +156,7 @@ export default function ApprovalsPage() {
                       setSelectedRequest(request);
                       setShowDetailModal(true);
                     }}
-                    className="ml-4 px-4 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white text-sm rounded-lg transition-colors"
+                    className="ml-4 px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white text-sm rounded-lg transition-all shadow-lg"
                   >
                     Review
                   </button>
@@ -174,7 +170,7 @@ export default function ApprovalsPage() {
       <Modal isOpen={showDetailModal} onClose={() => setShowDetailModal(false)} title="Leave Request Details" size="lg">
         {selectedRequest && (
           <div className="space-y-6">
-            <div className="bg-[#F8E8EE] p-4 rounded-lg">
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-lg">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="text-sm text-gray-600">Employee</div>
@@ -202,7 +198,7 @@ export default function ApprovalsPage() {
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Total Days</div>
-                  <div className="font-medium text-[#F2BED1]">{selectedRequest.total_days} days</div>
+                  <div className="font-medium text-cyan-600">{selectedRequest.total_days} days</div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Applied On</div>
@@ -229,7 +225,7 @@ export default function ApprovalsPage() {
               </button>
               <button
                 onClick={handleApprove}
-                className="px-6 py-2 bg-[#F2BED1] hover:bg-[#FDCEDF] text-white rounded-lg font-medium"
+                className="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg font-medium shadow-lg"
               >
                 Approve
               </button>

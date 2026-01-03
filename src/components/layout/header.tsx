@@ -9,7 +9,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between px-4 mx-auto">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold">WorkZen</span>
+            <span className="text-xl font-bold">DayFlow</span>
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="/" className="text-sm font-medium hover:text-blue-600 transition-colors">

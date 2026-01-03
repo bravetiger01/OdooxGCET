@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import StatsCard from '@/components/StatsCard';
 import Card from '@/components/Card';
 import DataTable from '@/components/DataTable';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { BarChart } from '@/components/SimpleChart';
 import { reportsAPI, attendanceAPI, leaveAPI } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -151,14 +153,7 @@ export default function DashboardPage() {
   ];
 
   if (loading && !mounted) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading dashboard..." />;
   }
 
   return (
@@ -206,66 +201,96 @@ export default function DashboardPage() {
       )}
 
       {/* Check In/Out Card */}
-      <Card className="p-6 bg-gradient-to-r from-[#F9F5F6] to-[#F8E8EE]">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Today's Attendance</h3>
-            <div className="flex items-center gap-6">
-              {attendanceStatus?.check_in && (
-                <div>
-                  <span className="text-sm text-gray-600">Check In: </span>
-                  <span className="font-semibold text-green-600">
-                    {new Date(attendanceStatus.check_in).toLocaleTimeString()}
-                  </span>
-                </div>
-              )}
-              {attendanceStatus?.check_out && (
-                <div>
-                  <span className="text-sm text-gray-600">Check Out: </span>
-                  <span className="font-semibold text-red-600">
-                    {new Date(attendanceStatus.check_out).toLocaleTimeString()}
-                  </span>
-                </div>
-              )}
-              {attendanceStatus?.work_hours && (
-                <div>
-                  <span className="text-sm text-gray-600">Hours: </span>
-                  <span className="font-semibold text-blue-600">{attendanceStatus.work_hours}h</span>
-                </div>
-              )}
-              {!attendanceStatus?.check_in && (
-                <span className="text-sm text-gray-500">Not checked in yet</span>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <Card className="p-6 bg-gradient-to-br from-cyan-50 via-blue-50 to-sky-50 border-2 border-cyan-100">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <span className="text-2xl">⏰</span>
+                Today's Attendance
+              </h3>
+              <div className="flex items-center gap-6">
+                {attendanceStatus?.check_in && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <span className="text-sm text-gray-600">Check In: </span>
+                    <span className="font-semibold text-green-600">
+                      {new Date(attendanceStatus.check_in).toLocaleTimeString()}
+                    </span>
+                  </motion.div>
+                )}
+                {attendanceStatus?.check_out && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
+                  >
+                    <span className="text-sm text-gray-600">Check Out: </span>
+                    <span className="font-semibold text-red-600">
+                      {new Date(attendanceStatus.check_out).toLocaleTimeString()}
+                    </span>
+                  </motion.div>
+                )}
+                {attendanceStatus?.work_hours && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                  >
+                    <span className="text-sm text-gray-600">Hours: </span>
+                    <span className="font-semibold text-blue-600">{attendanceStatus.work_hours}h</span>
+                  </motion.div>
+                )}
+                {!attendanceStatus?.check_in && (
+                  <span className="text-sm text-gray-500">Not checked in yet</span>
+                )}
+              </div>
+            </div>
+            <div className="flex gap-3">
+              {!attendanceStatus?.check_in ? (
+                <motion.button
+                  onClick={handleCheckIn}
+                  className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <CheckInIcon />
+                  Check In
+                </motion.button>
+              ) : !attendanceStatus?.check_out ? (
+                <motion.button
+                  onClick={handleCheckOut}
+                  className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <CheckOutIcon />
+                  Check Out
+                </motion.button>
+              ) : (
+                <motion.div
+                  className="flex items-center gap-2 text-green-600 bg-green-50 px-6 py-3 rounded-xl"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="font-medium">Attendance Marked</span>
+                </motion.div>
               )}
             </div>
           </div>
-          <div className="flex gap-3">
-            {!attendanceStatus?.check_in ? (
-              <button
-                onClick={handleCheckIn}
-                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-              >
-                <CheckInIcon />
-                Check In
-              </button>
-            ) : !attendanceStatus?.check_out ? (
-              <button
-                onClick={handleCheckOut}
-                className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-              >
-                <CheckOutIcon />
-                Check Out
-              </button>
-            ) : (
-              <div className="flex items-center gap-2 text-green-600">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="font-medium">Attendance Marked</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </Card>
+        </Card>
+      </motion.div>
 
       {/* Charts and Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -287,36 +312,44 @@ export default function DashboardPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="space-y-3">
             {hasPermission('add_employee') && (
-              <button
+              <motion.button
                 onClick={() => router.push('/employees')}
-                className="w-full bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium py-3 rounded-lg transition-colors"
+                className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Add Employee
-              </button>
+                + Add Employee
+              </motion.button>
             )}
             {hasPermission('run_payroll') && (
-              <button
+              <motion.button
                 onClick={() => router.push('/payroll/run')}
-                className="w-full bg-[#F8E8EE] hover:bg-[#FDCEDF] text-gray-900 font-medium py-3 rounded-lg transition-colors"
+                className="w-full bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-gray-900 font-medium py-3 rounded-xl transition-all"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Run Payroll
-              </button>
+                💰 Run Payroll
+              </motion.button>
             )}
             {hasPermission('apply_leave') && (
-              <button
+              <motion.button
                 onClick={() => router.push('/leaves')}
-                className="w-full bg-[#F8E8EE] hover:bg-[#FDCEDF] text-gray-900 font-medium py-3 rounded-lg transition-colors"
+                className="w-full bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 text-gray-900 font-medium py-3 rounded-xl transition-all"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Apply Leave
-              </button>
+                🏖️ Apply Leave
+              </motion.button>
             )}
             {hasPermission('view_reports') && (
-              <button
+              <motion.button
                 onClick={() => router.push('/reports')}
-                className="w-full bg-[#F8E8EE] hover:bg-[#FDCEDF] text-gray-900 font-medium py-3 rounded-lg transition-colors"
+                className="w-full bg-gradient-to-r from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 text-gray-900 font-medium py-3 rounded-xl transition-all"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Export Report
-              </button>
+                📊 Export Report
+              </motion.button>
             )}
           </div>
         </Card>

@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import EmptyState from '@/components/EmptyState';
 import { leaveAPI } from '@/lib/api';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function LeavesPage() {
   const { showToast, hasPermission, user } = useApp();
@@ -166,64 +169,66 @@ export default function LeavesPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading leaves...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading leaves..." />;
   }
 
   return (
     <div className="space-y-6">
       {/* Leave Balance Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {leaveAllocations.map((allocation) => (
-          <Card key={allocation.id} className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {allocation.leave_type_name}
-            </h3>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-[#F2BED1]">
-                {allocation.total_days - allocation.used_days}
-              </span>
-              <span className="text-gray-600">/ {allocation.total_days} days</span>
-            </div>
-            <div className="mt-2 text-sm text-gray-500">
-              Used: {allocation.used_days} days
-            </div>
-            {allocation.is_paid && (
-              <span className="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-                Paid Leave
-              </span>
-            )}
-          </Card>
+        {leaveAllocations.map((allocation, index) => (
+          <motion.div
+            key={allocation.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <Card className="p-6 hover:shadow-xl transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {allocation.leave_type_name}
+              </h3>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                  {allocation.total_days - allocation.used_days}
+                </span>
+                <span className="text-gray-600">/ {allocation.total_days} days</span>
+              </div>
+              <div className="mt-2 text-sm text-gray-500">
+                Used: {allocation.used_days} days
+              </div>
+              {/* Progress bar */}
+              <div className="mt-3 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(allocation.used_days / allocation.total_days) * 100}%` }}
+                  transition={{ duration: 1, delay: index * 0.1 + 0.3 }}
+                />
+              </div>
+              {allocation.is_paid && (
+                <span className="inline-block mt-3 px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                  💰 Paid Leave
+                </span>
+              )}
+            </Card>
+          </motion.div>
         ))}
       </div>
 
       {/* Apply Leave Button */}
       {hasPermission('apply_leave') && (
-        <div className="flex justify-end gap-3">
-          <button
-            onClick={async () => {
-              console.log('🧪 Manual test - fetching leave types...');
-              const result = await leaveAPI.getLeaveTypes(user?.companyId || 1);
-              console.log('🧪 Manual test result:', result);
-              alert(`Leave types: ${result.leaveTypes?.length || 0}\nCheck console for details`);
-            }}
-            className="bg-gray-500 hover:bg-gray-600 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-          >
-            🧪 Test API
-          </button>
+        <motion.div
+          className="flex justify-end gap-3"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
           <button
             onClick={() => setShowApplyModal(true)}
-            className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
             + Apply for Leave
           </button>
-        </div>
+        </motion.div>
       )}
 
       {/* Leave Requests */}
@@ -243,11 +248,11 @@ export default function LeavesPage() {
         </div>
 
         {leaveRequests.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">🏖️</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Leave Requests</h3>
-            <p className="text-gray-500">No leave requests found.</p>
-          </div>
+          <EmptyState
+            icon="🏖️"
+            title="No Leave Requests"
+            description="No leave requests found. Apply for leave to see them here."
+          />
         ) : (
           <div className="space-y-4">
             {leaveRequests.map((request) => (

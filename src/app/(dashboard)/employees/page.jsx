@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import EmptyState from '@/components/EmptyState';
 import { employeeAPI } from '@/lib/api';
 import { exportToCSV } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 export default function EmployeesPage() {
   const router = useRouter();
@@ -146,27 +149,24 @@ export default function EmployeesPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F2BED1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading employees...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" message="Loading employees..." />;
   }
 
   return (
     <div className="space-y-6">
       {hasPermission('add_employee') && (
-        <div className="flex justify-end">
+        <motion.div
+          className="flex justify-end"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
             + Add Employee
           </button>
-        </div>
+        </motion.div>
       )}
 
       <Card className="p-6">
@@ -197,40 +197,36 @@ export default function EmployeesPage() {
         </div>
 
         {filteredEmployees.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">👥</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {employees.length === 0 ? 'No Employees Yet' : 'No Employees Found'}
-            </h3>
-            <p className="text-gray-500 mb-6">
-              {employees.length === 0 
+          <EmptyState
+            icon={employees.length === 0 ? '👥' : '🔍'}
+            title={employees.length === 0 ? 'No Employees Yet' : 'No Employees Found'}
+            description={
+              employees.length === 0 
                 ? 'Get started by adding your first employee to the system.'
-                : 'Try adjusting your search or filter criteria.'}
-            </p>
-            {employees.length === 0 && hasPermission('add_employee') && (
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="bg-[#F2BED1] hover:bg-[#FDCEDF] text-white font-medium px-6 py-3 rounded-lg transition-colors"
-              >
-                + Add First Employee
-              </button>
-            )}
-          </div>
+                : 'Try adjusting your search or filter criteria.'
+            }
+            action={employees.length === 0 && hasPermission('add_employee') ? '+ Add First Employee' : null}
+            onAction={employees.length === 0 && hasPermission('add_employee') ? () => setShowAddModal(true) : null}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEmployees.map((employee) => (
-              <div
+            {filteredEmployees.map((employee, index) => (
+              <motion.div
                 key={employee.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
                 onClick={() => router.push(`/employees/${employee.id}`)}
-                className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-[#F2BED1] transition-all cursor-pointer"
+                className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-2xl hover:border-cyan-200 transition-all cursor-pointer group"
               >
                 {/* Profile Picture / Avatar */}
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#F2BED1] to-[#FDCEDF] flex items-center justify-center text-white text-xl font-semibold flex-shrink-0">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xl font-semibold flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                     {employee.first_name?.charAt(0)}{employee.last_name?.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-semibold text-gray-900 truncate">
+                    <h3 className="text-lg font-semibold text-gray-900 truncate group-hover:text-cyan-600 transition-colors">
                       {employee.first_name} {employee.last_name}
                     </h3>
                     <p className="text-sm text-gray-500 truncate">{employee.email}</p>
@@ -296,12 +292,12 @@ export default function EmployeesPage() {
                       e.stopPropagation();
                       router.push(`/employees/${employee.id}`);
                     }}
-                    className="w-full text-center text-[#F2BED1] hover:text-[#FDCEDF] font-medium text-sm"
+                    className="w-full text-center text-cyan-600 hover:text-cyan-700 font-medium text-sm group-hover:translate-x-1 transition-transform"
                   >
                     {hasPermission('edit_employee') ? 'View Details →' : 'View Profile →'}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}

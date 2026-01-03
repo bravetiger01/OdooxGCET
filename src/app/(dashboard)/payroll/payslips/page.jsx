@@ -211,7 +211,7 @@ export default function PayslipsPage() {
           <div className="space-y-6">
             <div className="bg-[#F8E8EE] p-6 rounded-lg print:bg-white">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold">WorkZen HRMS</h2>
+                <h2 className="text-2xl font-bold">DayFlow HRMS</h2>
                 <p className="text-sm text-gray-600">
                   Payslip for {new Date(selectedPayslip.pay_period_start).toLocaleString('default', { month: 'long', year: 'numeric' })}
                 </p>

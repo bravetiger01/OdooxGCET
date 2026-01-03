@@ -6,7 +6,7 @@ export function Footer() {
       <div className="container px-4 py-8 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">WorkZen</h3>
+            <h3 className="font-bold text-lg mb-4">DayFlow</h3>
             <p className="text-sm text-gray-600">
               Building better productivity solutions for modern teams.
             </p>
@@ -68,7 +68,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} WorkZen. All rights reserved.
+          © {new Date().getFullYear()} DayFlow. All rights reserved.
         </div>
       </div>
     </footer>
