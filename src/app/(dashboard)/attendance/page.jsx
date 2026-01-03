@@ -76,13 +76,20 @@ export default function AttendancePage() {
   const handleSave = async (e) => {
     e.preventDefault();
     
+    // Convert datetime-local to MySQL format (YYYY-MM-DD HH:MM:SS)
+    const formatDateTimeForMySQL = (dateTimeString) => {
+      if (!dateTimeString) return null;
+      const date = new Date(dateTimeString);
+      return date.toISOString().slice(0, 19).replace('T', ' ');
+    };
+
     const attendanceData = {
       id: selectedRecord?.id,
       user_id: formData.user_id,
       company_id: user?.companyId || 1,
       date: formData.date,
-      check_in: formData.check_in ? new Date(formData.check_in).toISOString() : null,
-      check_out: formData.check_out ? new Date(formData.check_out).toISOString() : null,
+      check_in: formData.check_in ? formatDateTimeForMySQL(formData.check_in) : null,
+      check_out: formData.check_out ? formatDateTimeForMySQL(formData.check_out) : null,
       status: formData.status,
       admin_user_id: user?.empId,
     };
