@@ -195,7 +195,7 @@ export default function SalaryInfoTab({ userId, companyId }) {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg"
+              className="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg shadow-lg transition-all"
             >
               {structure ? 'Edit' : 'Create'} Salary Structure
             </button>
