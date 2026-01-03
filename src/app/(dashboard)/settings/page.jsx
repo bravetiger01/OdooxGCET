@@ -7,7 +7,6 @@ import DataTable from '@/components/DataTable';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { salaryAPI, leaveAPI, companyAPI } from '@/lib/api';
 import { useApp } from '@/context/AppContext';
-import { motion } from 'framer-motion';
 
 export default function SettingsPage() {
   const { showToast, user } = useApp();
@@ -155,15 +154,12 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
           Settings
         </h1>
         <p className="text-gray-600 mt-1">Manage your company and system settings</p>
-      </motion.div>
+      </div>
 
       <Card className="p-6">
         <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
